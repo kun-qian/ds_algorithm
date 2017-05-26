@@ -42,4 +42,4 @@ def match(open_tag, close_tag):
 
 # print(simple_checker("(())()())"))
 # print(simple_checker('((()))'))
-# print(checker('{[()]}'))
+print(checker('{[()]}'))
