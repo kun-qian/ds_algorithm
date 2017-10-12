@@ -2,92 +2,84 @@
 # -*- coding: utf-8 -*-
 
 
-class Node:
-    def __init__(self, init_value):
-        self.value = init_value
+class Node(object):
+
+    def __init__(self, data):
+        self.data = data
         self.next = None
 
-    def get_value(self):
-        return self.value
+    def getData(self):
+        return self.data
 
-    def set_value(self, value):
-        self.value = value
+    def setData(self, data):
+        self.data = data
 
-    def get_next(self):
+    def getNext(self):
         return self.next
 
-    def set_next(self, next):
-        self.next = next
+    def setNext(self, node):
+        self.next = node
 
 
-class UnorderedList:
+class UnorderedList(object):
+
     def __init__(self):
         self.head = None
 
-    def is_empty(self):
-        return self.head is None
+    def isEmpty(self):
+        return self.head == None
 
     def add(self, item):
-        temp = Node(item)
-        temp.set_next(self.head)
-        self.head = temp
+        new = Node(item)
+        new.setNext(self.head)
+        self.head = new
 
     def size(self):
-        current = self.head
         count = 0
-
+        current = self.head
         while current is not None:
+            current = current.getNext()
             count += 1
-            current = current.get_next()
-
         return count
 
-    def search(self, item):
+    def search(self, value):
         current = self.head
         found = False
-
         while current is not None and not found:
-            if item == current.get_value():
+            if current.getData() == value:
                 found = True
             else:
-                current = current.get_next()
-
+                current = current.getNext()
         return found
 
-    def remove(self, item):
+    def remove(self, value):
+        previous = self.head
         current = self.head
-        previous = None
-        found = False
-        while current is not None and not found:
-            if current.get_value() == item:
-                found = True
+        while current is not None:
+            if current.getData() == value:
+                previous.setNext(current.getNext())
+                # current.setNext(None)
+                break
             else:
                 previous = current
-                current = current.get_next()
-
-        if found:
-            if previous == None:
-                self.head = None
-            else:
-                previous.set_next(current.get_next())
-
+                current = current.getNext()
 
     def __str__(self):
         l = []
         current = self.head
         while current is not None:
-            l.append(current.get_value())
-            current = current.get_next()
-
+            l.append(current.getData())
+            current = current.getNext()
         return str(l)
 
-
-m = UnorderedList()
-m.add(1)
-m.add(2)
-m.add('3')
-m.add('ha')
-m.add(True)
-# print(m)
-m.remove(4)
-print(m)
+l = UnorderedList()
+l.add(1)
+l.add('a')
+l.add(2)
+print(l)
+print(l.size())
+print(l.search(1))
+l.remove('a')
+print(l)
+l.add('haha')
+print(l.size())
